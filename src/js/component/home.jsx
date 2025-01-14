@@ -1,9 +1,10 @@
 import React from "react";
 import { useState,useEffect } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-import { element } from "prop-types";
+import Swal from 'sweetalert2';
+
+
+
 
 //create your first component
 const Home = () => {
@@ -14,24 +15,32 @@ const Home = () => {
 
 	//Creo una funcion para controlar la entrada del ENTER
 	const controlEnter = (event) => {
-
+		
 		if (event.keyCode === 13) {
 			
-			createNewTask();
+			createNewTask(event);
 	
 		}
 
 	}
 
 	//Creo una funcion para crear nuevas tareas
-	const  createNewTask = () => {
-
+	const  createNewTask = (event) => {
+		event.preventDefault();
 		if(newTask.trim()){
 			setTasks([...tasks,newTask]);
 
 			setNewTask("");
 		}
-	
+
+		if (tasks.length == 5) {
+			
+			Swal.fire({
+				title: "Has introducido muchas tareas!",
+				text: "Seguro que quieres agregar mas ?",
+				icon: "info"
+			  });
+		}
 	}
 
 	//Funcion para borrar el elemento de la lista
